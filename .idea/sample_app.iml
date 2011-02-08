@@ -12,6 +12,18 @@
   <component name="GemRequirementsHolder" version="3">
     <requirement>
       <requirement>
+        <dependency name="annotate-models" version="1.0.4" bound="EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="factory_girl_rails" version="1.0" bound="EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
         <dependency name="rails" version="3.0.3" bound="EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
@@ -82,6 +94,7 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] rspec-expectations (v2.3.0, /Users/sage/.rvm/gems/ruby-1.9.2-p136@rails303/gems/rspec-expectations-2.3.0)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rspec-core (v2.3.1, /Users/sage/.rvm/gems/ruby-1.9.2-p136@rails303/gems/rspec-core-2.3.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rspec (v2.3.0, /Users/sage/.rvm/gems/ruby-1.9.2-p136@rails303/gems/rspec-2.3.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] annotate-models (v1.0.4, /Users/sage/.rvm/gems/ruby-1.9.2-p136@rails303/gems/annotate-models-1.0.4)" level="application" />
   </component>
 </module>
 
