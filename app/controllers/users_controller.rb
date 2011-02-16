@@ -1,12 +1,18 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :except => [:show, :new, :create]  
+
+  protect_from_forgery :except => [:feedapi]
+  respond_to :html, :xml  
+
+  before_filter :authenticate, :except => [:show, :new, :create, :feedapi]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
+  before_filter :basic_authenticate, :only => [ :feedapi ]
 
 
   def index
     @title = "All users"
     @users = User.paginate(:page => params[:page])
+    respond_with(@users)
   end
 
   def show
@@ -66,6 +72,20 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def feedapi
+    #@title = "Feed"
+    #@user = User.authenticate(email, pwd);
+    #@feed = @user.feed.paginate(:page => params[:page])
+    respond_to do |format|
+          #format.html { render 'show_feed' }
+          format.xml  { render :xml => @user.feed }
+          #format.xml do
+          #  render :inline => "#{params} #{request.headers["HTTP_AUTHORIZATION"]}\n"
+          #end
+          #format.json { render :json => @user.feed }
+         end
+  end
+
   private
     def correct_user
       @user = User.find(params[:id])
@@ -75,5 +95,18 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+
+    USER_NAME, PASSWORD = "eric", "pwd"
+
+    #code from
+    #http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Basic.html#method-i-authentication_request
+    def basic_authenticate
+      authenticate_or_request_with_http_basic do |user_name, password|
+        #user_name == USER_NAME && password == PASSWORD
+        @user = User.authenticate(user_name, password)
+        return true
+      end
+    end
+
 
 end

@@ -2,7 +2,7 @@ SampleApp::Application.routes.draw do
 
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :feedapi, :usersapi
     end
   end
   resources :sessions  , :only => [:new, :create, :destroy]
@@ -13,6 +13,8 @@ SampleApp::Application.routes.draw do
   #get "pages/contact" 
   #get "pages/about" 
   #get "pages/help"
+
+  #post "sessions/createapi"
   
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
