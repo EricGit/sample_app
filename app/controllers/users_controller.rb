@@ -102,8 +102,9 @@ class UsersController < ApplicationController
     #http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Basic.html#method-i-authentication_request
     def basic_authenticate
       authenticate_or_request_with_http_basic do |user_name, password|
-        #user_name == USER_NAME && password == PASSWORD
-        @user = User.authenticate(user_name, password)
+        user_name == USER_NAME && password == PASSWORD
+        @user = User.find(1)
+        #@user = User.authenticate(user_name, password)
         return true
       end
     end
