@@ -1,18 +1,26 @@
 class UsersController < ApplicationController
+  #require 'pdf/writer'
+  #Mime::Type.register "application/pdf", :pdf
 
   protect_from_forgery :except => [:feedapi]
-  respond_to :html, :xml  
+  respond_to :html, :xml
+  respond_to :html, :xml
 
   before_filter :authenticate, :except => [:show, :new, :create, :feedapi]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
   before_filter :basic_authenticate, :only => [ :feedapi ]
 
-
   def index
     @title = "All users"
     @users = User.paginate(:page => params[:page])
-    respond_with(@users)
+    #respond_with(@users)
+    @pdf = Prawn::Document.new()
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
+      format.pdf
+    end
   end
 
   def show
@@ -76,6 +84,7 @@ class UsersController < ApplicationController
     #@title = "Feed"
     #@user = User.authenticate(email, pwd);
     #@feed = @user.feed.paginate(:page => params[:page])
+    @user = User.find(1)
     respond_to do |format|
           #format.html { render 'show_feed' }
           format.xml  { render :xml => @user.feed }
@@ -102,10 +111,13 @@ class UsersController < ApplicationController
     #http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Basic.html#method-i-authentication_request
     def basic_authenticate
       authenticate_or_request_with_http_basic do |user_name, password|
+        #log(user_name)
+        #adfasd
         user_name == USER_NAME && password == PASSWORD
-        @user = User.find(1)
+        #blah
+        #@user = User.find(1)
         #@user = User.authenticate(user_name, password)
-        return true
+        #return true
       end
     end
 
